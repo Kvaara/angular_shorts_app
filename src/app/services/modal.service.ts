@@ -12,7 +12,7 @@ export class ModalService {
     return this.isHidden;
   }
 
-  toggleModal($event: Event) {
+  toggleModal($event?: Event) {
     if ($event) $event.preventDefault();
     this.isHidden = !this.isHidden;
   }
