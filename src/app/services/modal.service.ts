@@ -20,7 +20,14 @@ export class ModalService {
     });
   }
 
-  isModalOpen(id: string): boolean {
+  // Very useful for preventing memory leaks by unregistering the modal from the modals array
+  unregisterModal(id: string): void {
+    this.modals = this.modals.filter((modal) => {
+      modal.id !== id;
+    });
+  }
+
+  isModalHidden(id: string): boolean {
     return !!this.modals.find((modal) => modal.id === id)?.isHidden;
   }
 
@@ -28,6 +35,6 @@ export class ModalService {
     if ($event) $event.preventDefault();
     
     const modal = this.modals.find((modal) => modal.id === id);
-    if (modal) !modal.isHidden;
+    if (modal) modal.isHidden = !modal.isHidden;
   }
 }
