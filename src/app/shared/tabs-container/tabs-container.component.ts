@@ -12,19 +12,23 @@ export class TabsContainerComponent implements AfterContentInit {
   constructor() { }
 
   ngAfterContentInit(): void {
-    if (!this.areThereAnyActiveTabs()) {
+    if (!this.activeTabs() || this.activeTabs.length === 0) {
       this.selectTab(this.tabs!.first);
     }
   }
 
-  areThereAnyActiveTabs() {
+  activeTabs() {
     const activeTabs = this.tabs?.filter( (tab) => {
       return tab.active;
     });
     return activeTabs;
   }
 
-  selectTab(tab: TabComponent) {
+  selectTab(tab: TabComponent, event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+
     // TO ensure that there is only one active tab
     this.tabs?.forEach((tab) => {
       tab.active = false;
@@ -32,4 +36,11 @@ export class TabsContainerComponent implements AfterContentInit {
     tab.active = true;
   }
 
+  appendClasses(tabIsActive: boolean) {
+    const classesToBeAppended = {
+      'hover:text-indigo-400': !tabIsActive,
+      'hover:text-white text-white bg-indigo-400': tabIsActive
+    }
+    return classesToBeAppended;
+  }
 }
