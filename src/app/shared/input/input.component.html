@@ -1,14 +1,16 @@
-<input formControlName="name" type="text"
+<input [formControl]="control" type="text"
     class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
       duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
     placeholder="Enter Name" id="name"/>
-<p *ngIf="registerForm.controls['name'].touched && registerForm.controls['name'].dirty && registerForm.controls['name']['errors']?.['required']"
-    class="text-red-400">
-    *Name is required
-</p>
-<p *ngIf="registerForm.controls['name'].touched && registerForm.controls['name'].dirty && registerForm.controls['name']['errors']?.['minlength']"
-    class="text-red-400">
-    *Name has to be longer than 
-    {{ registerForm.controls["name"]["errors"]?.["minlength"]["requiredLength"] | json }}
-    letter(s)
-</p>
+<div *ngIf="control.touched && control.dirty">
+    <p *ngIf="control['errors']?.['required']"
+        class="text-red-400">
+        *Name is required
+    </p>
+    <p *ngIf="control['errors']?.['minlength']"
+        class="text-red-400">
+        *Name has to be longer than 
+        {{ control["errors"]?.["minlength"]["requiredLength"] | json }}
+        letter(s)
+    </p>
+</div>
