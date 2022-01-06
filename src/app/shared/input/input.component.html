@@ -22,4 +22,11 @@
     <p *ngIf="control['errors']?.['max']" class="text-red-400">
         * Age can't be over 120
     </p>
+    <p *ngIf="control['errors']?.['pattern']" class="text-red-400">
+        * Must be at least 8 characters long
+        <br>
+        * Must include at least 1 uppercase and lowercase character
+        <br>
+        * Must include at least 1 number
+    </p>
 </div>

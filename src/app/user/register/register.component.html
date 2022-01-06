@@ -18,18 +18,12 @@
     <!-- Password -->
     <div class="mb-3">
       <label class="inline-block mb-2" for="password">Password</label>
-      <input type="password"
-        class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
-          duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
-        placeholder="Password" id="password"/>
+      <app-input [control]="password" inputPlaceholder="Enter your password..." inputType="password" inputId="password"></app-input>
     </div>
     <!-- Confirm Password -->
     <div class="mb-3">
       <label class="inline-block mb-2" for="confirm-password">Confirm Password</label>
-      <input type="password"
-        class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
-          duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
-        placeholder="Confirm Password" id="confirm-password"/>
+      <app-input [control]="confirm_password" inputPlaceholder="Confirm your password..." inputType="password" inputId="confirm-password"></app-input>
     </div>
     <!-- Phone Number -->
     <div class="mb-3">
