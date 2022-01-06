@@ -2,40 +2,50 @@
  <form [formGroup]="registerForm">
     <!-- Name -->
     <div class="mb-3">
-      <label class="inline-block mb-2" for="name">Name</label>
-      <app-input [control]="name" inputPlaceholder="Enter your name..." inputId="name"></app-input>
+      <label class="inline-block mb-2" for="name">Name:</label>
+      <app-input [control]="name" inputPlaceholder="Enter your name..." 
+        inputId="name"></app-input>
     </div>
+
     <!-- Email -->
     <div class="mb-3">
-      <label class="inline-block mb-2" for="email">Email</label>
-      <app-input [control]="email" inputPlaceholder="Enter your email..." inputType="email" inputId="email"></app-input>
+      <label class="inline-block mb-2" for="email">Email:</label>
+      <app-input [control]="email" inputPlaceholder="Enter your email..." 
+        inputType="email" inputId="email"></app-input>
     </div>
+
     <!-- Age -->
     <div class="mb-3">
-      <label class="inline-block mb-2" for="age">Age</label>
-      <app-input [control]="age" inputPlaceholder="Enter your age..." inputType="number" inputId="age"></app-input>
+      <label class="inline-block mb-2" for="age">Age:</label>
+      <app-input [control]="age" inputPlaceholder="Enter your age..." 
+        inputType="number" inputId="age"></app-input>
     </div>
+
     <!-- Password -->
     <div class="mb-3">
-      <label class="inline-block mb-2" for="password">Password</label>
-      <app-input [control]="password" inputPlaceholder="Enter your password..." inputType="password" inputId="password"></app-input>
+      <label class="inline-block mb-2" for="password">Password:</label>
+      <app-input [control]="password" inputPlaceholder="Enter your password..." 
+        inputType="password" inputId="password"></app-input>
     </div>
+
     <!-- Confirm Password -->
     <div class="mb-3">
-      <label class="inline-block mb-2" for="confirm-password">Confirm Password</label>
-      <app-input [control]="confirm_password" inputPlaceholder="Confirm your password..." inputType="password" inputId="confirm-password"></app-input>
+      <label class="inline-block mb-2" for="confirm-password">Confirm Password:</label>
+      <app-input [control]="confirm_password" inputPlaceholder="Confirm your password..."
+        inputType="password" inputId="confirm-password"></app-input>
     </div>
+
     <!-- Phone Number -->
     <div class="mb-3">
-      <label class="inline-block mb-2" for="phone-number">Phone Number</label>
-      <input type="text"
-        class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
-          duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
-        placeholder="Enter Phone Number" id="phone-number"/>
+      <label class="inline-block mb-2" for="phone-number">Phone Number:</label>
+      <app-input [control]="phoneNumber" inputPlaceholder="Enter your phone number..." 
+        inputType="tel" inputId="phone-number" format="000 000 0000"></app-input>
     </div>
+
     <button type="submit"
       class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition
         hover:bg-indigo-500">
       Submit
     </button>
+
   </form>
