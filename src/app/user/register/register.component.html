@@ -3,15 +3,12 @@
     <!-- Name -->
     <div class="mb-3">
       <label class="inline-block mb-2" for="name">Name</label>
-      <app-input [control]="name"></app-input>
+      <app-input [control]="name" inputPlaceholder="Enter your name..." inputId="name"></app-input>
     </div>
     <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2" for="email">Email</label>
-      <input type="email"
-        class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
-          duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
-        placeholder="Enter Email" id="email"/>
+      <app-input [control]="email" inputPlaceholder="Enter your email..." inputType="email" inputId="email"></app-input>
     </div>
     <!-- Age -->
     <div class="mb-3">

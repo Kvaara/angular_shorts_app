@@ -10,12 +10,15 @@ export class RegisterComponent {
   name =  new FormControl("", [
     Validators.required,
     Validators.minLength(2),
-  ])
-  email = new FormControl("")
-  age = new FormControl("")
-  password = new FormControl("")
-  confirm_password = new FormControl("")
-  phoneNumber = new FormControl("")
+  ]);
+  email = new FormControl("", [
+    Validators.required,
+    Validators.email,
+  ]);
+  age = new FormControl("");
+  password = new FormControl("");
+  confirm_password = new FormControl("");
+  phoneNumber = new FormControl("");
 
   registerForm = new FormGroup({
     name: this.name,
