@@ -14,6 +14,12 @@
         letter(s)
     </p>
     <p *ngIf="control['errors']?.['email']" class="text-red-400">
-        * You must type a valid email
+        * You must type a valid email address
+    </p>
+    <p *ngIf="control['errors']?.['min']" class="text-red-400">
+        * Minimum age requirement is 18
+    </p>
+    <p *ngIf="control['errors']?.['max']" class="text-red-400">
+        * Age can't be over 120
     </p>
 </div>
