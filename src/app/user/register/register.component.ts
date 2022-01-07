@@ -32,6 +32,9 @@ export class RegisterComponent {
     Validators.minLength(12),
     Validators.maxLength(12),
   ]);
+  showAlert: boolean = false;
+  alertMessage: string = "Hold on! Your account is being processed...";
+  alertBackgroundColor: string = "bg-cornflower-blue";
 
   registerForm = new FormGroup({
     name: this.name,
@@ -43,4 +46,9 @@ export class RegisterComponent {
   });
 
   constructor() {}
+
+  register(): void {
+    this.showAlert = true;
+  }
+
 }

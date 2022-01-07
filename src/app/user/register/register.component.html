@@ -1,5 +1,10 @@
- <!-- Registration Form -->
- <form [formGroup]="registerForm">
+<!-- Alert modal box -->
+<app-alert *ngIf="showAlert" [color]="alertBackgroundColor">
+  {{ alertMessage }}
+</app-alert>
+ 
+<!-- Registration Form -->
+<form [formGroup]="registerForm" (ngSubmit)="register()">
     <!-- Name -->
     <div class="mb-3">
       <label class="inline-block mb-2" for="name">Name:</label>
@@ -49,4 +54,4 @@
       Submit
     </button>
 
-  </form>
+</form>
