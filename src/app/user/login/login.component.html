@@ -1,5 +1,5 @@
 <!-- Login Form -->
-      <form #loginForm="ngForm">
+      <form #loginForm="ngForm" (ngSubmit)="signIn()">
         <!-- Email -->
         <div class="mb-3">
           <label class="inline-block mb-2" for="login-email">Email</label>
@@ -20,7 +20,7 @@
           <label class="inline-block mb-2" for="login-password">Password</label>
           <input type="password"
             class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
-            duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+              duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
             placeholder="Password" id="login-password" name="login-password" required
             [(ngModel)]="credentials.password"
             #password="ngModel"/>
@@ -29,8 +29,9 @@
             </p>
         </div>
         <button type="submit"
-          class="block w-full bg-indigo-500 text-white font-bold py-1.5 px-3 rounded transition
-            hover:bg-indigo-600">
-          Submit
+          class="block w-full bg-indigo-500 font-bold text-white py-1.5 px-3 rounded transition
+            hover:bg-indigo-600 disabled:bg-zinc-500 disabled:cursor-not-allowed"
+            [disabled]="loginForm.invalid">
+          Sign in
         </button>
       </form>
