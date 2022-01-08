@@ -1,5 +1,5 @@
 <!-- Login Form -->
-      <form>
+      <form #loginForm="ngForm">
         <!-- Email -->
         <div class="mb-3">
           <label class="inline-block mb-2" for="login-email">Email</label>
@@ -7,8 +7,13 @@
             class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
               duration-500 focus:outline-none rounded bg-transparent
               focus:border-indigo-400"
-            placeholder="Enter Email" id="login-email" name="login-email"
-            [(ngModel)]="credentials.email"/>
+            placeholder="Enter Email" id="login-email" name="login-email" required 
+            pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+            [(ngModel)]="credentials.email"
+            #email="ngModel"/>
+            <p *ngIf="email.errors && email.touched && email.dirty" class="text-red-400">
+              * Email is in an incorrect form
+            </p>
         </div>
         <!-- Password -->
         <div class="mb-3">
@@ -16,7 +21,12 @@
           <input type="password"
             class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
             duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
-            placeholder="Password" id="login-password"/>
+            placeholder="Password" id="login-password" name="login-password" required
+            [(ngModel)]="credentials.password"
+            #password="ngModel"/>
+            <p *ngIf="password.errors && password.touched && password.dirty" class="text-red-400">
+              * Password is required
+            </p>
         </div>
         <button type="submit"
           class="block w-full bg-indigo-500 text-white font-bold py-1.5 px-3 rounded transition
