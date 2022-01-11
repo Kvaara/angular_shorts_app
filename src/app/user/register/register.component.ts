@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-register',
@@ -7,6 +9,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  constructor(private auth: AngularFireAuth) {}
+
   name =  new FormControl("", [
     Validators.required,
     Validators.minLength(2),
@@ -32,6 +36,7 @@ export class RegisterComponent {
     Validators.minLength(12),
     Validators.maxLength(12),
   ]);
+
   showAlert: boolean = false;
   alertMessage: string = "Hold on! Your account is being processed...";
   alertBackgroundColor: string = "bg-cornflower-blue";
@@ -45,10 +50,50 @@ export class RegisterComponent {
     phoneNumber: this.phoneNumber,
   });
 
-  constructor() {}
-
-  register(): void {
+  async registerAndShowAlert() {
+    this.alertMessage = "Hold on! Your account is being processed...";
+    this.alertBackgroundColor = "bg-cornflower-blue";
     this.showAlert = true;
+
+    if (this.areCredentialsValid()) {
+      const {email, password} = this.registerForm.value;
+      this.createUserWithErrHandling(email, password);
+    } else {
+      this.alertMessage = "Your email and/or password doesn't meet the requirements";
+      this.alertBackgroundColor = "bg-red-400";
+    }
+
   }
 
+  areCredentialsValid(): boolean {
+    if (this.registerForm.invalid) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  async createUserWithErrHandling(email: string, password: string) {
+    try {
+      const userCredentials = await this.auth.createUserWithEmailAndPassword(
+        email, password,
+      );
+      console.log(userCredentials);
+      this.modifyAlertMessageDependingOnErrors(null);
+    } catch (error) {
+      this.modifyAlertMessageDependingOnErrors(error);
+      throw new Error("There was an unexpected error:" + error);
+    }
+  }
+
+  modifyAlertMessageDependingOnErrors(error?: any) {
+    if (error) {
+      // TODO Email is already taken
+      this.alertMessage = "There was an unexpected error. Please try again.";
+      this.alertBackgroundColor = "bg-red-400";
+    } else {
+      this.alertMessage = "Your account has been succesfully created!";
+      this.alertBackgroundColor = "bg-forest-green";
+    }
+  }
 }

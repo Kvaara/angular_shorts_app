@@ -7,6 +7,7 @@ module.exports = {
         "bg-green-400",
         "bg-red-400",
         "cornflower-blue",
+        "forest-green",
       ],
     },
   },
@@ -15,6 +16,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         "cornflower-blue": "#043E86",
+        "forest-green": "#0D4923",
       },
     },
   },
