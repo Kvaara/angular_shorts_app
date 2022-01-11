@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { AuthService } from "../../services/auth.service";
+import { User } from 'src/app/models/user.model';
 
 
 @Component({
@@ -14,7 +16,7 @@ export class RegisterComponent {
   alertBackgroundColor: string = "bg-cornflower-blue";
   inSubmission = false;
 
-  constructor(private auth: AngularFireAuth) {}
+  constructor(private auth: AuthService) {}
 
   name =  new FormControl("", [
     Validators.required,
@@ -51,6 +53,14 @@ export class RegisterComponent {
     phoneNumber: this.phoneNumber,
   });
 
+  userData: User = {
+    name: this.registerForm.value.name,
+    age: this.registerForm.value.age,
+    email: this.registerForm.value.email,
+    password: this.registerForm.value.password,
+    phoneNumber: this.registerForm.value.phoneNumber,
+  }; 
+
   async registerAndShowAlert() {
     this.inSubmission = true;
 
@@ -59,8 +69,7 @@ export class RegisterComponent {
     this.showAlert = true;
 
     if (this.areCredentialsValid()) {
-      const {email, password} = this.registerForm.value;
-      await this.createUserWithErrHandling(email, password);
+      await this.createUserWithErrHandling(this.userData);
     } else {
       this.alertMessage = "Your email and/or password doesn't meet the requirements";
       this.alertBackgroundColor = "bg-red-400";
@@ -77,16 +86,15 @@ export class RegisterComponent {
     }
   }
 
-  async createUserWithErrHandling(email: string, password: string) {
+  async createUserWithErrHandling(userData: User) {
     try {
-      const userCredentials = await this.auth.createUserWithEmailAndPassword(
-        email, password,
-      );
-      console.log(userCredentials);
+      await this.auth.registerUser(userData); 
       this.modifyAlertMessageDependingOnErrors(null);
+
     } catch (error) {
       this.modifyAlertMessageDependingOnErrors(error);
       throw new Error("There was an unexpected error:" + error);
+
     }
   }
 
