@@ -9,6 +9,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  showAlert: boolean = false;
+  alertMessage: string = "Hold on! Your account is being processed...";
+  alertBackgroundColor: string = "bg-cornflower-blue";
+  inSubmission = false;
+
   constructor(private auth: AngularFireAuth) {}
 
   name =  new FormControl("", [
@@ -37,10 +42,6 @@ export class RegisterComponent {
     Validators.maxLength(12),
   ]);
 
-  showAlert: boolean = false;
-  alertMessage: string = "Hold on! Your account is being processed...";
-  alertBackgroundColor: string = "bg-cornflower-blue";
-
   registerForm = new FormGroup({
     name: this.name,
     email: this.email,
@@ -51,18 +52,21 @@ export class RegisterComponent {
   });
 
   async registerAndShowAlert() {
+    this.inSubmission = true;
+
     this.alertMessage = "Hold on! Your account is being processed...";
     this.alertBackgroundColor = "bg-cornflower-blue";
     this.showAlert = true;
 
     if (this.areCredentialsValid()) {
       const {email, password} = this.registerForm.value;
-      this.createUserWithErrHandling(email, password);
+      await this.createUserWithErrHandling(email, password);
     } else {
       this.alertMessage = "Your email and/or password doesn't meet the requirements";
       this.alertBackgroundColor = "bg-red-400";
     }
-
+    
+    this.inSubmission = false;
   }
 
   areCredentialsValid(): boolean {
