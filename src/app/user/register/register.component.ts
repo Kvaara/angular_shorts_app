@@ -53,29 +53,35 @@ export class RegisterComponent {
     phoneNumber: this.phoneNumber,
   });
 
-  userData: User = {
-    name: this.registerForm.value.name,
-    age: this.registerForm.value.age,
-    email: this.registerForm.value.email,
-    password: this.registerForm.value.password,
-    phoneNumber: this.registerForm.value.phoneNumber,
-  }; 
+
 
   async registerAndShowAlert() {
     this.inSubmission = true;
+
+    const userData = this.returnUserWithValues();
 
     this.alertMessage = "Hold on! Your account is being processed...";
     this.alertBackgroundColor = "bg-cornflower-blue";
     this.showAlert = true;
 
     if (this.areCredentialsValid()) {
-      await this.createUserWithErrHandling(this.userData);
+      await this.createUserWithErrHandling(userData);
     } else {
       this.alertMessage = "Your email and/or password doesn't meet the requirements";
       this.alertBackgroundColor = "bg-red-400";
     }
     
     this.inSubmission = false;
+  }
+
+  returnUserWithValues(): User {
+    return {
+      name: this.registerForm.value.name,
+      age: this.registerForm.value.age,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      phoneNumber: this.registerForm.value.phoneNumber,
+    };
   }
 
   areCredentialsValid(): boolean {
@@ -88,6 +94,7 @@ export class RegisterComponent {
 
   async createUserWithErrHandling(userData: User) {
     try {
+      console.log(userData);
       await this.auth.registerUser(userData); 
       this.modifyAlertMessageDependingOnErrors(null);
 
