@@ -44,4 +44,8 @@ export class AuthService {
     await userCredentials.user.updateProfile({displayName: userData.name});
   }
 
+  public async signInUserWithEmailAndPassword(email: string, password: string) {
+    await this.auth.signInWithEmailAndPassword(email, password);
+  }
+
 }

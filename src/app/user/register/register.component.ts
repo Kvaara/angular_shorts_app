@@ -64,6 +64,7 @@ export class RegisterComponent {
     this.alertBackgroundColor = "bg-cornflower-blue";
     this.showAlert = true;
 
+    // Do a final check client-side if the credentials are valid and meet the requirements
     if (this.areCredentialsValid()) {
       await this.createUserWithErrHandling(userData);
     } else {
@@ -94,13 +95,12 @@ export class RegisterComponent {
 
   async createUserWithErrHandling(userData: User) {
     try {
-      console.log(userData);
       await this.auth.registerUser(userData); 
       this.modifyAlertMessageDependingOnErrors(null);
 
     } catch (error) {
       this.modifyAlertMessageDependingOnErrors(error);
-      throw new Error("There was an unexpected error:" + error);
+      console.error("There was an unexpected error:" + error);
 
     }
   }
