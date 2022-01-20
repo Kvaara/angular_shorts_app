@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { delay, map, Observable, pipe } from 'rxjs';
+import { delay, map, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
 
