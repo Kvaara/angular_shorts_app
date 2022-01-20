@@ -13,7 +13,7 @@ export class AuthService {
   private usersCollection: AngularFirestoreCollection<User>;
   public isAuthenticated$: Observable<boolean>;
 
-  public isAuthenticatedWithDelay$;
+  public isAuthenticatedWithDelay$: Observable<boolean>;
 
   constructor(private auth: AngularFireAuth, private db: AngularFirestore) {
     this.usersCollection = db.collection("users");
@@ -21,7 +21,7 @@ export class AuthService {
       map((user) => !!user)
     );
 
-    this.isAuthenticatedWithDelay$ = this.isAuthenticated$.pipe(delay(1000));
+    this.isAuthenticatedWithDelay$ = this.isAuthenticated$.pipe(delay(1500));
   }
 
   public async registerUser(userData: User) {
