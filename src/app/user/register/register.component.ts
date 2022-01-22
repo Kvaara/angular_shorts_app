@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from "../../services/auth.service";
 import { User } from 'src/app/models/user.model';
+import { RegisterValidators } from '../validators/registervalidators';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class RegisterComponent {
     password: this.password,
     confirm_password: this.confirm_password,
     phoneNumber: this.phoneNumber,
-  });
+  }, [RegisterValidators.matchPasswords]);
 
 
 
