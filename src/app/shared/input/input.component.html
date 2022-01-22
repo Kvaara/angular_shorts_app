@@ -29,4 +29,7 @@
         <br>
         * Must include at least 1 number
     </p>
+    <p *ngIf="control['errors']?.['noMatch']" class="text-red-400">
+        * Password doesn't match
+    </p>
 </div>
