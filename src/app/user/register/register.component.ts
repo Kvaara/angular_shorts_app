@@ -3,7 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from "../../services/auth.service";
 import { User } from 'src/app/models/user.model';
-import { RegisterValidators } from '../validators/registervalidators';
+import { RegisterValidators } from '../validators/register-validators';
+import { EmailTaken } from '../validators/email-taken';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class RegisterComponent {
   alertBackgroundColor: string = "bg-cornflower-blue";
   inSubmission = false;
 
-  constructor(private auth: AuthService) {}
+  constructor(
+    private auth: AuthService, 
+    private emailTaken: EmailTaken
+    ) {}
 
   name =  new FormControl("", [
     Validators.required,
@@ -26,7 +30,7 @@ export class RegisterComponent {
   email = new FormControl("", [
     Validators.required,
     Validators.email,
-  ]);
+  ], this.emailTaken.validate);
   age = new FormControl("", [
     Validators.required,
     Validators.min(18),
