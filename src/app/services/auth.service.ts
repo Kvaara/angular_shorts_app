@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
-import { delay, map, Observable } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { delay, filter, map, Observable, of, switchMap } from 'rxjs';
 import { User } from '../models/user.model';
 
 
@@ -11,16 +11,28 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-  private usersCollection: AngularFirestoreCollection<User>;
-  public isAuthenticated$: Observable<boolean>;
+  private _usersCollection: AngularFirestoreCollection<User>;
 
+  public isAuthenticated$: Observable<boolean>;
   public isAuthenticatedWithDelay$: Observable<boolean>;
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private router: Router) {
-    this.usersCollection = db.collection("users");
+  private _redirect = false;
+
+  constructor(
+    private auth: AngularFireAuth, 
+    private db: AngularFirestore, 
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    ) {
+    this._usersCollection = db.collection("users");
     this.isAuthenticated$ = auth.user.pipe(
       map((user) => !!user)
     );
+    this.router.events.pipe(
+      filter( (event) => event instanceof NavigationEnd),
+      map( (_) => this.activatedRoute.firstChild),
+      switchMap( (route) => route?.data ?? of({}))
+      ).subscribe( (routeData) => routeData["isAuthOnly"] ? this._redirect = true : this._redirect = false);
 
     this.isAuthenticatedWithDelay$ = this.isAuthenticated$.pipe(delay(1500));
   }
@@ -39,7 +51,7 @@ export class AuthService {
     }
     const userUID =  userCredentials.user.uid;
 
-    await this.usersCollection.doc(userUID).set({
+    await this._usersCollection.doc(userUID).set({
       name: userData.name,
       email: userData.email,
       age: userData.age,
@@ -58,7 +70,10 @@ export class AuthService {
 
     await this.auth.signOut();
 
-    await this.router.navigateByUrl("/");
+    if (this._redirect) {
+      await this.router.navigateByUrl("/");
+    }
+
   }
 
 }

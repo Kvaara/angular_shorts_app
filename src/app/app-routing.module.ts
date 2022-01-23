@@ -17,6 +17,9 @@ component: AboutComponent,
 const managePage: Route = {
   path: "manage",
   component: ManageComponent,
+  data: {
+    isAuthOnly: true,
+  }
 }
 
 const routes: Routes = [homePage, aboutPage, managePage];
