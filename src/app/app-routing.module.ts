@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import { ManageComponent } from './manage/manage.component';
 
 const homePage: Route = {
 path: "",
@@ -13,7 +14,12 @@ path: "about",
 component: AboutComponent,
 };
 
-const routes: Routes = [homePage, aboutPage];
+const managePage: Route = {
+  path: "manage",
+  component: ManageComponent,
+}
+
+const routes: Routes = [homePage, aboutPage, managePage];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
