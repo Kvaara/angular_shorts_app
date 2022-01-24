@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './upload/upload.component';
+import { ClipComponent } from './clip/clip.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UploadComponent } from './upload/upload.component';
     HomeComponent,
     AboutComponent,
     ManageComponent,
-    UploadComponent
+    UploadComponent,
+    ClipComponent
   ],
   imports: [
     BrowserModule,

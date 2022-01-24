@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
+import { ClipComponent } from './clip/clip.component';
 import { HomeComponent } from './home/home.component';
 import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './upload/upload.component';
@@ -31,7 +32,21 @@ const uploadPage: Route = {
   }
 }
 
-const routes: Routes = [homePage, aboutPage, managePage, uploadPage];
+const clipPage: Route = {
+  path: "clip/:id",
+  component: ClipComponent,
+  data: {
+    isAuthOnly: true,
+  }
+}
+
+const routes: Routes = [
+  homePage, 
+  aboutPage, 
+  managePage, 
+  uploadPage, 
+  clipPage,
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
