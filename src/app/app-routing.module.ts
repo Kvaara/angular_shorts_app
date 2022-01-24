@@ -4,6 +4,7 @@ import { AboutComponent } from './about/about.component';
 import { ClipComponent } from './clip/clip.component';
 import { HomeComponent } from './home/home.component';
 import { ManageComponent } from './manage/manage.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { UploadComponent } from './upload/upload.component';
 
 const homePage: Route = {
@@ -40,12 +41,18 @@ const clipPage: Route = {
   }
 }
 
+const notFoundPage: Route = {
+  path: "**",
+  component: NotFoundComponent,
+}
+
 const routes: Routes = [
   homePage, 
   aboutPage, 
   managePage, 
   uploadPage, 
   clipPage,
+  notFoundPage,
 ];
 
 @NgModule({

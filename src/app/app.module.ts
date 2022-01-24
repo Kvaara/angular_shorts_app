@@ -14,6 +14,7 @@ import { AboutComponent } from './about/about.component';
 import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './upload/upload.component';
 import { ClipComponent } from './clip/clip.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ClipComponent } from './clip/clip.component';
     AboutComponent,
     ManageComponent,
     UploadComponent,
-    ClipComponent
+    ClipComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
