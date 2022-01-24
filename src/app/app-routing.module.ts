@@ -3,6 +3,7 @@ import { Route, RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { ManageComponent } from './manage/manage.component';
+import { UploadComponent } from './upload/upload.component';
 
 const homePage: Route = {
 path: "",
@@ -22,7 +23,15 @@ const managePage: Route = {
   }
 }
 
-const routes: Routes = [homePage, aboutPage, managePage];
+const uploadPage: Route = {
+  path: "upload",
+  component: UploadComponent,
+  data: {
+    isAuthOnly: true,
+  }
+}
+
+const routes: Routes = [homePage, aboutPage, managePage, uploadPage];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

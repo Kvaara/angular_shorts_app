@@ -12,6 +12,7 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ManageComponent } from './manage/manage.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ManageComponent } from './manage/manage.component';
     NavComponent,
     HomeComponent,
     AboutComponent,
-    ManageComponent
+    ManageComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
