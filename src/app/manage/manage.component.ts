@@ -12,17 +12,16 @@ export class ManageComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // this.activatedRoute.queryParamMap.subscribe( (queryParams: ParamMap) => 
-    //   this.videoOrder = queryParams.get("sort") === "2" 
-    //   ? "2"
-    //   : "1"
-    // );
+    this.activatedRoute.queryParamMap.subscribe( (queryParams: ParamMap) => 
+      this.videoOrder = queryParams.get("sort") === "2" 
+      ? "2"
+      : "1"
+    );
   }
 
   sort(event: Event) {
     const selectedOption: string = (event.target as HTMLSelectElement).value;
     this.router.navigateByUrl(`manage?sort=${selectedOption}`);
-    this.videoOrder = selectedOption;
   }
 
 }
