@@ -52,6 +52,10 @@ const routes: Routes = [
   managePage, 
   uploadPage, 
   clipPage,
+  {
+    path: "manage-clips",
+    redirectTo: "manage"
+  },
   notFoundPage,
 ];
 
