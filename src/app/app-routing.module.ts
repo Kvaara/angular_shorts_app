@@ -6,6 +6,9 @@ import { HomeComponent } from './home/home.component';
 import { ManageComponent } from './manage/manage.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UploadComponent } from './upload/upload.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from "@angular/fire/compat/auth-guard";
+
+const redirectUnauthorizedToHome = () => redirectUnauthorizedTo("/");
 
 const homePage: Route = {
 path: "",
@@ -20,16 +23,20 @@ component: AboutComponent,
 const managePage: Route = {
   path: "manage",
   component: ManageComponent,
+  canActivate: [AngularFireAuthGuard],
   data: {
     isAuthOnly: true,
+    authGuardPipe: redirectUnauthorizedToHome,
   }
 }
 
 const uploadPage: Route = {
   path: "upload",
   component: UploadComponent,
+  canActivate: [AngularFireAuthGuard],
   data: {
     isAuthOnly: true,
+    authGuardPipe: redirectUnauthorizedToHome,
   }
 }
 
