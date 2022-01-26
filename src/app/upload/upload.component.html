@@ -5,10 +5,18 @@
 
       <!-- Upload Dropbox -->
       <div app-event-blocker
+        (dragend)="setIsUserDragging(false)"
+        (dragover)="setIsUserDragging(true)"
+        (dragenter)="setIsUserDragging(true)"
+        (dragleave)="setIsUserDragging(false)"
+        (mouseleave)="setIsUserDragging(false)"
+        (drop)="storeFile($event)"
+        [ngClass]="{'bg-forest-green': isUserDragging}"
         class="w-full px-10 py-40 rounded text-center cursor-pointer border border-dashed
           border-gray-400 transition duration-500 hover:text-white
-          hover:bg-indigo-400 hover:border-indigo-400 hover:border-solid text-xl">
-        <h5>Drop your file here (mp4 only!)</h5>
+          hover:bg-forest-green text-xl">
+        <h5>Drop your video here...</h5>
+        <h5>(*.mp4 files only)</h5>
       </div>
 
       <!-- Video Editor -->

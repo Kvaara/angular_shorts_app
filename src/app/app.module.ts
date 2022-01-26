@@ -15,6 +15,7 @@ import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './upload/upload.component';
 import { ClipComponent } from './clip/clip.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

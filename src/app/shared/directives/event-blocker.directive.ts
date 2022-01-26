@@ -4,7 +4,7 @@ import { Directive, HostListener } from '@angular/core';
   selector: '[app-event-blocker]'
 })
 export class EventBlockerDirective {
-  constructor() { }
+  constructor() {}
 
   @HostListener("drop", ["$event"])
   @HostListener("dragover", ["$event"])
