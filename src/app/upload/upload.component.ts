@@ -12,7 +12,8 @@ export class UploadComponent implements OnInit {
   showUploadDropbox = true;
 
   titleControl = new FormControl("", [
-    Validators.required
+    Validators.required,
+    Validators.minLength(3),
   ]);
 
   uploadForm = new FormGroup({
@@ -39,7 +40,16 @@ export class UploadComponent implements OnInit {
       return;
     }
 
+    this.titleControl.setValue(
+      // Any character after the latest dot (.) character get's removed.
+      this.videoFile.name.replace(/\.[^/.]+$/, "")
+      );
+
     this.showUploadDropbox = false;
+
+  }
+
+  uploadVideoFile(): void {
 
   }
 
