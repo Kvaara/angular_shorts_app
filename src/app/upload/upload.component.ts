@@ -7,17 +7,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadComponent implements OnInit {
   isUserDragging = false;
+  videoFile: File | null = null;
+  showUploadDropbox = true;
+
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  storeFile($event: Event): void {
-    this.setIsUserDragging(false);
-  }
-
-  setIsUserDragging(isUserDragging: boolean): void {
+  setIsUserDraggingTo(isUserDragging: boolean): void {
     this.isUserDragging = isUserDragging;
   }
+
+  storeFile($event: Event): void {
+    this.setIsUserDraggingTo(false);
+
+    this.videoFile = ($event as DragEvent).dataTransfer?.files[0] ?? null
+
+    if (!this.videoFile || this.videoFile.type !== "video/mp4") {
+      return;
+    }
+
+    this.showUploadDropbox = false;
+
+  }
+
 }
