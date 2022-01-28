@@ -26,7 +26,7 @@
       <ng-template #videoEditor>
 
         <!-- Form -->
-        <form [formGroup]="uploadForm" (ngSubmit)="uploadVideoFile">
+        <form [formGroup]="uploadForm" (ngSubmit)="uploadVideoFile()">
           <!-- Screenshots -->
           <h2 class="mb-2 text-xl">Select a Thumbnail:</h2>
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
