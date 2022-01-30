@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators  } from '@angular/forms';
+import { last } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 
 
@@ -16,6 +17,8 @@ export class UploadComponent implements OnInit {
   alertMessage: string = "";
   alertBackgroundColor: string = "";
   inSubmission = false;
+  uploadPercentage = 0;
+  showPercentage = false;
 
   titleControl = new FormControl("", [
     Validators.required,
@@ -58,20 +61,34 @@ export class UploadComponent implements OnInit {
 
   uploadVideoFile(): void {
     this.inSubmission = true;
+    this.showPercentage = true;
     this.setAlertMessageWith("Your short is being uploaded...", "bg-cornflower-blue");
 
     const videoUniqueID = uuidv4();
     const videoPath = `videos/${videoUniqueID}.mp4`;
     
-    this.storage.upload(videoPath, this.videoFile)
-    .then((_) => {
-      this.setAlertMessageWith("Video uploaded successfully!", "bg-forest-green");
-    })
-    .catch((error) => {
-      this.setAlertMessageWith("There was an unexpected error. Please try again...", "bg-red-400");
-      console.error("There was an unexpected error:", error);
-    })
-    .finally(() => this.inSubmission = false);
+    const uploadTask = this.storage.upload(videoPath, this.videoFile)
+
+    uploadTask.percentageChanges().subscribe((progress) => {
+      this.uploadPercentage = progress as number / 100;
+    });
+
+    uploadTask.snapshotChanges().pipe(
+      last()
+    ).subscribe(
+      {
+        next: (_) => {
+          this.showPercentage = false;
+          this.setAlertMessageWith("Short uploaded successfully!", "bg-forest-green");
+        },
+        error: (error) => {
+          this.showPercentage = false;
+          this.inSubmission = false;
+          this.setAlertMessageWith("There was an unexpected error. Please try again...", "bg-red-400");
+          console.error("There was an unexpected error:", error);
+        },
+      }
+    );
   }
 
   setAlertMessageWith(alertMessage: string, alertBackgroundColor: string, ): void {

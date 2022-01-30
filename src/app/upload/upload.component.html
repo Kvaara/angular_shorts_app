@@ -1,8 +1,8 @@
 <!-- Main Content -->
 <section class="container mx-auto my-8 bg-secondary p-6">
-
   <app-alert *ngIf="alertMessage.length > 0" [color]="alertBackgroundColor">
   <p> {{ alertMessage }} </p>
+  <p *ngIf="showPercentage"> {{ uploadPercentage | percent }} </p>
   </app-alert>
 
     <div class="rounded relative flex flex-col">
