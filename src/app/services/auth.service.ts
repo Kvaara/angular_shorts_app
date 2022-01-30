@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { delay, filter, map, Observable, of, switchMap } from 'rxjs';
-import { User } from '../models/user.model';
+import { User } from '../models/user';
 
 
 @Injectable({

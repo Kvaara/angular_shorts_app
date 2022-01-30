@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators  } from '@angular/forms';
-import { last } from 'rxjs';
+import { last, switchMap } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
-
+import { Short } from '../models/short';
+import firebase from "firebase/compat";
 
 @Component({
   selector: 'app-upload',
@@ -19,6 +21,7 @@ export class UploadComponent implements OnInit {
   inSubmission = false;
   uploadPercentage = 0;
   showPercentage = false;
+  user: firebase.User | null = null;
 
   titleControl = new FormControl("", [
     Validators.required,
@@ -29,7 +32,12 @@ export class UploadComponent implements OnInit {
     title: this.titleControl,
   });
   
-  constructor(private storage: AngularFireStorage) { }
+  constructor(
+    private storage: AngularFireStorage,
+    private auth: AngularFireAuth,
+  ) {
+    auth.user.subscribe((user) => this.user = user);
+  }
 
 
   ngOnInit(): void {
@@ -68,16 +76,27 @@ export class UploadComponent implements OnInit {
     const videoPath = `videos/${videoUniqueID}.mp4`;
     
     const uploadTask = this.storage.upload(videoPath, this.videoFile)
+    const clipRef = this.storage.ref(videoPath);
 
     uploadTask.percentageChanges().subscribe((progress) => {
       this.uploadPercentage = progress as number / 100;
     });
 
     uploadTask.snapshotChanges().pipe(
-      last()
+      last(),
+      switchMap(() => clipRef.getDownloadURL())
     ).subscribe(
       {
-        next: (_) => {
+        next: (url) => {
+          const clip: Short = new Short(
+            this.user!.uid,
+            this.user!.displayName,
+            this.titleControl.value,
+            `${videoUniqueID}.mp4`,
+            url,
+          );
+
+          console.log(clip);
           this.showPercentage = false;
           this.setAlertMessageWith("Short uploaded successfully!", "bg-forest-green");
         },

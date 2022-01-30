@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from "../../services/auth.service";
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/models/user';
 import { RegisterValidators } from '../validators/register-validators';
 import { EmailTaken } from '../validators/email-taken';
 
