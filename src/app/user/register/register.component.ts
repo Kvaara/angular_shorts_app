@@ -112,7 +112,6 @@ export class RegisterComponent {
 
   modifyAlertMessageDependingOnErrors(error?: any) {
     if (error) {
-      // TODO Email is already taken
       this.alertMessage = "There was an unexpected error. Please try again.";
       this.alertBackgroundColor = "bg-red-400";
     } else {
