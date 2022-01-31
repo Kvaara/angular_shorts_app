@@ -63,7 +63,7 @@ export class RegisterComponent {
   async registerAndShowAlert() {
     this.inSubmission = true;
 
-    const userData = this.returnUserWithValues();
+    const userData = this.returnUserDataObject();
 
     this.alertMessage = "Hold on! Your account is being processed...";
     this.alertBackgroundColor = "bg-cornflower-blue";
@@ -80,7 +80,7 @@ export class RegisterComponent {
     this.inSubmission = false;
   }
 
-  returnUserWithValues(): User {
+  returnUserDataObject(): User {
     return {
       name: this.registerForm.value.name,
       age: this.registerForm.value.age,

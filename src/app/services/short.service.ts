@@ -14,7 +14,7 @@ export class ShortService {
     this.shortsCollection = db.collection("shorts");
   }
 
-  createShort(shortData: Short)  {
-    this.shortsCollection.add(shortData);
+  async createShort(shortData: Short)  {
+    await this.shortsCollection.add(shortData);
   }
 }

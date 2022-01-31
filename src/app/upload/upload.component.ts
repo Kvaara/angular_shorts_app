@@ -55,7 +55,7 @@ export class UploadComponent implements OnInit {
     this.videoFile = ($event as DragEvent).dataTransfer?.files[0] ?? null
 
     if (!this.videoFile || this.videoFile.type !== "video/mp4") {
-      this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading type "${this.videoFile?.type}" file...`, "bg-red-400");
+      this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading a file of type "${this.videoFile?.type}"...`, "bg-red-400");
     } else {
       this.setAlertMessageWith("", "");
 
@@ -90,13 +90,7 @@ export class UploadComponent implements OnInit {
     ).subscribe(
       {
         next: (url) => {
-          const short: Short = new Short(
-            this.user!.uid,
-            this.user!.displayName,
-            this.titleControl.value,
-            `${videoUniqueID}.mp4`,
-            url,
-          );
+          const short: Short = this.returnShortDataObject(videoUniqueID, url);
 
           this.shortService.createShort(short);
 
@@ -117,5 +111,15 @@ export class UploadComponent implements OnInit {
   setAlertMessageWith(alertMessage: string, alertBackgroundColor: string, ): void {
     this.alertBackgroundColor = alertBackgroundColor;
     this.alertMessage = alertMessage;
+  }
+
+  returnShortDataObject(videoUniqueID: string, url: string): Short {
+    return {
+      uid: this.user!.uid,
+      displayName: this.user!.displayName,
+      title: this.titleControl.value,
+      fileName: `${videoUniqueID}.mp4`,
+      url,
+    }
   }
 }
