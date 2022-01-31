@@ -6,6 +6,7 @@ import { last, switchMap } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 import { Short } from '../models/short';
 import firebase from "firebase/compat";
+import { ShortService } from '../services/short.service';
 
 @Component({
   selector: 'app-upload',
@@ -35,6 +36,7 @@ export class UploadComponent implements OnInit {
   constructor(
     private storage: AngularFireStorage,
     private auth: AngularFireAuth,
+    private shortService: ShortService,
   ) {
     auth.user.subscribe((user) => this.user = user);
   }
@@ -88,7 +90,7 @@ export class UploadComponent implements OnInit {
     ).subscribe(
       {
         next: (url) => {
-          const clip: Short = new Short(
+          const short: Short = new Short(
             this.user!.uid,
             this.user!.displayName,
             this.titleControl.value,
@@ -96,7 +98,9 @@ export class UploadComponent implements OnInit {
             url,
           );
 
-          console.log(clip);
+          this.shortService.createShort(short);
+
+          console.log(short);
           this.showPercentage = false;
           this.setAlertMessageWith("Short uploaded successfully!", "bg-forest-green");
         },
