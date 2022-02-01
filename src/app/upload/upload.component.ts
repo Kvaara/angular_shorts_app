@@ -70,6 +70,7 @@ export class UploadComponent implements OnInit {
   }
 
   uploadVideoFile(): void {
+    this.uploadForm.disable();
     this.inSubmission = true;
     this.showPercentage = true;
     this.setAlertMessageWith("Your short is being uploaded...", "bg-cornflower-blue");
@@ -99,6 +100,7 @@ export class UploadComponent implements OnInit {
           this.setAlertMessageWith("Short uploaded successfully!", "bg-forest-green");
         },
         error: (error) => {
+          this.uploadForm.enable();
           this.showPercentage = false;
           this.inSubmission = false;
           this.setAlertMessageWith("There was an unexpected error. Please try again...", "bg-red-400");
