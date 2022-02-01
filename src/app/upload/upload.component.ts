@@ -52,7 +52,15 @@ export class UploadComponent implements OnInit {
   storeFile($event: Event): void {
     this.setIsUserDraggingTo(false);
 
-    this.videoFile = ($event as DragEvent).dataTransfer?.files[0] ?? null
+    const fileDragged = ($event as DragEvent).dataTransfer?.files.item(0) ?? null;
+    const fileNotDragged = ($event.target as HTMLInputElement).files?.item(0) ?? null;
+
+    fileDragged ? this.videoFile = fileDragged : this.videoFile = fileNotDragged;
+
+    // this.videoFile = ($event as DragEvent).dataTransfer?.files[0] ?? null
+
+    
+
 
     if (!this.videoFile || this.videoFile.type !== "video/mp4") {
       this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading a file of type "${this.videoFile?.type}"...`, "bg-red-400");
