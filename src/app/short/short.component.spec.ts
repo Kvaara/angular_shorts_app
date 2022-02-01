@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClipComponent } from './clip.component';
+import { ShortComponent } from './short.component';
 
 describe('ClipComponent', () => {
-  let component: ClipComponent;
-  let fixture: ComponentFixture<ClipComponent>;
+  let component: ShortComponent;
+  let fixture: ComponentFixture<ShortComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClipComponent ]
+      declarations: [ ShortComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClipComponent);
+    fixture = TestBed.createComponent(ShortComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

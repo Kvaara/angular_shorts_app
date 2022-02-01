@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Short } from '../models/short';
 import firebase from "firebase/compat";
 import { ShortService } from '../services/short.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -38,6 +39,7 @@ export class UploadComponent implements OnDestroy {
     private storage: AngularFireStorage,
     private auth: AngularFireAuth,
     private shortService: ShortService,
+    private route: Router,
   ) {
     auth.user.subscribe((user) => this.user = user);
   }
@@ -83,7 +85,7 @@ export class UploadComponent implements OnDestroy {
     const videoPath = `videos/${videoUniqueID}.mp4`;
     
     this.uploadTask = this.storage.upload(videoPath, this.videoFile);
-    const clipRef = this.storage.ref(videoPath);
+    const shortRef = this.storage.ref(videoPath);
 
     this.uploadTask.percentageChanges().subscribe((progress) => {
       this.uploadPercentage = progress as number / 100;
@@ -91,17 +93,22 @@ export class UploadComponent implements OnDestroy {
 
     this.uploadTask.snapshotChanges().pipe(
       last(),
-      switchMap(() => clipRef.getDownloadURL())
+      switchMap(() => shortRef.getDownloadURL())
     ).subscribe(
       {
-        next: (url) => {
+        next: async (url) => {
           const short: Short = this.returnShortDataObject(videoUniqueID, url);
 
-          this.shortService.createShort(short);
+          const shortDocumentRef = await this.shortService.createShort(short);
 
-          console.log(short);
           this.showPercentage = false;
-          this.setAlertMessageWith("Short uploaded successfully!", "bg-forest-green");
+          this.setAlertMessageWith("Short uploaded successfully! You're being redirected...", "bg-forest-green");
+
+          setTimeout(() => {
+            this.route.navigate([
+              "short", shortDocumentRef.id,
+            ]);
+          }, 1500)
         },
         error: (error) => {
           this.uploadForm.enable();

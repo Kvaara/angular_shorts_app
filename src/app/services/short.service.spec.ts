@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ShortService } from './short.service';
 
-describe('ClipService', () => {
+describe('ShortService', () => {
   let service: ShortService;
 
   beforeEach(() => {

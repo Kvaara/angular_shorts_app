@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 import { Short } from '../models/short';
 
 @Injectable({
@@ -14,7 +14,8 @@ export class ShortService {
     this.shortsCollection = db.collection("shorts");
   }
 
-  async createShort(shortData: Short)  {
-    await this.shortsCollection.add(shortData);
+  createShort(shortData: Short): Promise<DocumentReference<Short>>  {
+    // await this.shortsCollection.add(shortData);
+    return this.shortsCollection.add(shortData);
   }
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
-import { ClipComponent } from './clip/clip.component';
+import { ShortComponent } from './short/short.component';
 import { HomeComponent } from './home/home.component';
 import { ManageComponent } from './manage/manage.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -40,9 +40,9 @@ const uploadPage: Route = {
   }
 }
 
-const clipPage: Route = {
-  path: "clip/:id",
-  component: ClipComponent,
+const shortPage: Route = {
+  path: "short/:id",
+  component: ShortComponent,
   data: {
     isAuthOnly: true,
   }
@@ -58,9 +58,9 @@ const routes: Routes = [
   aboutPage, 
   managePage, 
   uploadPage, 
-  clipPage,
+  shortPage,
   {
-    path: "manage-clips",
+    path: "manage-shorts",
     redirectTo: "manage"
   },
   notFoundPage,

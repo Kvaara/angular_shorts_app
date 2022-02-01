@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
-  selector: 'app-clip',
-  templateUrl: './clip.component.html',
-  styleUrls: ['./clip.component.scss']
+  selector: 'app-short',
+  templateUrl: './short.component.html',
+  styleUrls: ['./short.component.scss']
 })
-export class ClipComponent implements OnInit {
+export class ShortComponent implements OnInit {
    id = "";
 
   constructor(public activatedRoute: ActivatedRoute) { }
