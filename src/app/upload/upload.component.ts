@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators  } from '@angular/forms';
 import { last, switchMap } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
@@ -13,7 +13,7 @@ import { ShortService } from '../services/short.service';
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss']
 })
-export class UploadComponent implements OnInit {
+export class UploadComponent implements OnDestroy {
   isUserDragging = false;
   videoFile: File | null = null;
   showUploadDropbox = true;
@@ -23,6 +23,7 @@ export class UploadComponent implements OnInit {
   uploadPercentage = 0;
   showPercentage = false;
   user: firebase.User | null = null;
+  uploadTask?: AngularFireUploadTask;
 
   titleControl = new FormControl("", [
     Validators.required,
@@ -41,8 +42,8 @@ export class UploadComponent implements OnInit {
     auth.user.subscribe((user) => this.user = user);
   }
 
-
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+      this.uploadTask?.cancel();
   }
 
   setIsUserDraggingTo(isUserDragging: boolean): void {
@@ -56,11 +57,6 @@ export class UploadComponent implements OnInit {
     const fileNotDragged = ($event.target as HTMLInputElement).files?.item(0) ?? null;
 
     fileDragged ? this.videoFile = fileDragged : this.videoFile = fileNotDragged;
-
-    // this.videoFile = ($event as DragEvent).dataTransfer?.files[0] ?? null
-
-    
-
 
     if (!this.videoFile || this.videoFile.type !== "video/mp4") {
       this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading a file of type "${this.videoFile?.type}"...`, "bg-red-400");
@@ -86,14 +82,14 @@ export class UploadComponent implements OnInit {
     const videoUniqueID = uuidv4();
     const videoPath = `videos/${videoUniqueID}.mp4`;
     
-    const uploadTask = this.storage.upload(videoPath, this.videoFile)
+    this.uploadTask = this.storage.upload(videoPath, this.videoFile);
     const clipRef = this.storage.ref(videoPath);
 
-    uploadTask.percentageChanges().subscribe((progress) => {
+    this.uploadTask.percentageChanges().subscribe((progress) => {
       this.uploadPercentage = progress as number / 100;
     });
 
-    uploadTask.snapshotChanges().pipe(
+    this.uploadTask.snapshotChanges().pipe(
       last(),
       switchMap(() => clipRef.getDownloadURL())
     ).subscribe(
