@@ -17,7 +17,7 @@ import { ShortComponent } from './short/short.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+// import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [

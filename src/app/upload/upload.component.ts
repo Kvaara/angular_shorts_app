@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators  } from '@angular/forms';
 import { last, switchMap } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 import { Short } from '../models/short';
-import firebase from "firebase/compat";
+import firebase from "firebase/compat/app";
 import { ShortService } from '../services/short.service';
 import { Router } from '@angular/router';
 
@@ -133,6 +133,7 @@ export class UploadComponent implements OnDestroy {
       title: this.titleControl.value,
       fileName: `${videoUniqueID}.mp4`,
       url,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }
   }
 }
