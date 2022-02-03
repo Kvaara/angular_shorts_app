@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 interface IShort {
     docID?: string;
     uid: string;
-    displayName?: string | null;
+    byUsername?: string | null;
     title: string;
     fileName: string;
     url: string;
@@ -13,7 +13,7 @@ interface IShort {
 export class Short implements IShort {
     docID?: string;
     uid: string;
-    displayName?: string | null;
+    byUsername?: string | null;
     title: string;
     fileName: string;
     url: string;
@@ -30,7 +30,7 @@ export class Short implements IShort {
     ) {
         this.docID = docID;
         this.uid = uid;
-        this.displayName = displayName;
+        this.byUsername = displayName;
         this.title = title;
         this.fileName = fileName;
         this.url = url;

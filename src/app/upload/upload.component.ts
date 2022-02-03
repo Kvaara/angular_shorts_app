@@ -129,7 +129,7 @@ export class UploadComponent implements OnDestroy {
   returnShortDataObject(videoUniqueID: string, url: string): Short {
     return {
       uid: this.user!.uid,
-      displayName: this.user!.displayName,
+      byUsername: this.user!.displayName,
       title: this.titleControl.value,
       fileName: `${videoUniqueID}.mp4`,
       url,
