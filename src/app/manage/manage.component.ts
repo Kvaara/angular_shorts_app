@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
+import { Short } from '../models/short';
+import { ShortService } from '../services/short.service';
 
 @Component({
   selector: 'app-manage',
@@ -8,8 +10,12 @@ import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 })
 export class ManageComponent implements OnInit {
   videoOrder = "1";
+  shorts: Short[] = [];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private shortService: ShortService,
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe( (queryParams: ParamMap) => 
@@ -17,6 +23,16 @@ export class ManageComponent implements OnInit {
       ? "2"
       : "1"
     );
+    this.shortService.getShortsMadeByUser().subscribe((docs) => {
+      this.shorts = [];
+
+      docs.forEach((doc) => {
+        this.shorts.push({
+          docID: doc.id,
+          ...doc.data(),
+        });
+      });
+    });
   }
 
   sort(event: Event) {

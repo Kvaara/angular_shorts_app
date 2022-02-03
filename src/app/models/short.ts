@@ -1,6 +1,7 @@
 import firebase from "firebase/compat/app";
 
 interface IShort {
+    docID?: string;
     uid: string;
     displayName?: string | null;
     title: string;
@@ -10,6 +11,7 @@ interface IShort {
 }
 
 export class Short implements IShort {
+    docID?: string;
     uid: string;
     displayName?: string | null;
     title: string;
@@ -18,6 +20,7 @@ export class Short implements IShort {
     timestamp: firebase.firestore.FieldValue;
 
     constructor(
+        docID: string,
         uid: string,
         displayName: string | null,
         title: string,
@@ -25,6 +28,7 @@ export class Short implements IShort {
         url: string,
         timestamp: firebase.firestore.FieldValue,
     ) {
+        this.docID = docID;
         this.uid = uid;
         this.displayName = displayName;
         this.title = title;
