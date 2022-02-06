@@ -12,6 +12,7 @@ import { ShortService } from '../services/short.service';
 export class ManageComponent implements OnInit {
   videoOrder = "1";
   shorts: Short[] = [];
+  shortToEdit: Short | null = null;
 
   constructor(private router: Router, 
     private activatedRoute: ActivatedRoute,
@@ -43,6 +44,8 @@ export class ManageComponent implements OnInit {
   }
 
   openModal($event: Event, short: Short): void {
+    this.shortToEdit = short;
+    
     this.modal.toggleModal("editShort", $event);
   }
 

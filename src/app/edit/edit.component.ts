@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Short } from '../models/short';
 import { ModalService } from '../services/modal.service';
 
 @Component({
@@ -7,6 +8,7 @@ import { ModalService } from '../services/modal.service';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit, OnDestroy {
+  @Input() shortToEdit: Short | null = null;
 
   constructor(
     private modal: ModalService,
