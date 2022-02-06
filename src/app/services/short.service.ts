@@ -33,4 +33,10 @@ export class ShortService {
       map((snapshot) => (snapshot as QuerySnapshot<Short>).docs),
     );
   }
+
+  updateShort(id: string, title: string) {
+    return this.shortsCollection.doc(id).update({
+      title
+    });
+  }
 }

@@ -17,7 +17,7 @@ export class ManageComponent implements OnInit {
   constructor(private router: Router, 
     private activatedRoute: ActivatedRoute,
     private shortService: ShortService,
-    private modal: ModalService
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -44,9 +44,10 @@ export class ManageComponent implements OnInit {
   }
 
   openModal($event: Event, short: Short): void {
+    this.modalService.toggleModal("editShort", $event);
+    
     this.shortToEdit = short;
     
-    this.modal.toggleModal("editShort", $event);
   }
 
 }

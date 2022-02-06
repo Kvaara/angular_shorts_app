@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Short } from '../models/short';
 import { ModalService } from '../services/modal.service';
@@ -11,6 +11,10 @@ import { ShortService } from '../services/short.service';
 })
 export class EditComponent implements OnInit, OnDestroy, OnChanges {
   @Input() shortToEdit: Short | null = null;
+
+  inSubmission = false;
+  alertMessage: string = "";
+  alertBackgroundColor: string = "";
 
   shortID = new FormControl("");
   titleControl = new FormControl("", [
@@ -32,7 +36,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-      this.modal.unregisterModal("editShort");
+    this.modal.unregisterModal("editShort");
   }
 
   ngOnChanges(): void {
@@ -40,5 +44,31 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
       this.shortID.setValue(this.shortToEdit.docID);
       this.titleControl.setValue(this.shortToEdit.title);
     }
+  }
+
+  async updateShort() {
+    this.editShortForm.disable();
+    this.inSubmission = true;
+    this.setAlertMessageWith("Your short is being updated...", "bg-cornflower-blue");
+
+    try {
+      await this.shortService.updateShort(
+        this.shortID.value,
+        this.titleControl.value,
+      );
+      this.inSubmission = false; 
+      this.setAlertMessageWith("Short updated succesfully!", "bg-forest-green");
+    } catch (error) {
+      this.editShortForm.enable();
+      this.inSubmission = false;
+      this.setAlertMessageWith("There was an unexpected error. Please try again...", "bg-red-400");
+      console.error("There was an unexpected error:", error);
+    }
+
+  }
+
+  setAlertMessageWith(alertMessage: string, alertBackgroundColor: string, ): void {
+    this.alertMessage = alertMessage;
+    this.alertBackgroundColor = alertBackgroundColor;
   }
 }

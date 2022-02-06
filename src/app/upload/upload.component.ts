@@ -122,8 +122,8 @@ export class UploadComponent implements OnDestroy {
   }
 
   setAlertMessageWith(alertMessage: string, alertBackgroundColor: string, ): void {
-    this.alertBackgroundColor = alertBackgroundColor;
     this.alertMessage = alertMessage;
+    this.alertBackgroundColor = alertBackgroundColor;
   }
 
   returnShortDataObject(videoUniqueID: string, url: string): Short {
