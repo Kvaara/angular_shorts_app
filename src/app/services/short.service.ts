@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { Short } from '../models/short';
 
@@ -13,6 +14,7 @@ export class ShortService {
   constructor(
     private db: AngularFirestore,
     private auth: AngularFireAuth,
+    private storage: AngularFireStorage,
   ) {
     this.shortsCollection = db.collection("shorts");
   }
@@ -38,5 +40,12 @@ export class ShortService {
     return this.shortsCollection.doc(id).update({
       title
     });
+  }
+
+  async deleteShort(short: Short) {
+    const shortRef = this.storage.ref(`videos/${short.fileName}`);
+    shortRef.delete();
+
+    await this.shortsCollection.doc(short.docID).delete();
   }
 }

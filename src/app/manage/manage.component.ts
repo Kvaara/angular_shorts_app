@@ -58,4 +58,16 @@ export class ManageComponent implements OnInit {
     });
   }
 
+  async deleteShort($event: Event, short: Short) {
+     $event.preventDefault();
+
+     await this.shortService.deleteShort(short);
+
+     this.shorts.forEach((shortElement, index) => {
+      if (shortElement.docID == short.docID) {
+        this.shorts.splice(index, 1);
+      }
+     });
+  }
+
 }
