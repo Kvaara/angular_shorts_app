@@ -50,4 +50,12 @@ export class ManageComponent implements OnInit {
     
   }
 
+  update($event: Short): void {
+    this.shorts.forEach((short, index) => {
+      if (short.docID == $event.docID) {
+        this.shorts[index].title = $event.title;
+      }
+    });
+  }
+
 }

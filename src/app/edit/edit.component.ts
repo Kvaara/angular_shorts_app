@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Short } from '../models/short';
 import { ModalService } from '../services/modal.service';
@@ -11,6 +11,7 @@ import { ShortService } from '../services/short.service';
 })
 export class EditComponent implements OnInit, OnDestroy, OnChanges {
   @Input() shortToEdit: Short | null = null;
+  @Output() update = new EventEmitter;
 
   inSubmission = false;
   alertMessage: string = "";
@@ -43,10 +44,17 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     if (this.shortToEdit) {
       this.shortID.setValue(this.shortToEdit.docID);
       this.titleControl.setValue(this.shortToEdit.title);
+      this.editShortForm.enable();
+      this.inSubmission = false;
+      this.alertMessage = "";
     }
   }
 
   async updateShort() {
+    if (!this.shortToEdit) {
+      return;
+    }
+
     this.editShortForm.disable();
     this.inSubmission = true;
     this.setAlertMessageWith("Your short is being updated...", "bg-cornflower-blue");
@@ -56,6 +64,8 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         this.shortID.value,
         this.titleControl.value,
       );
+      this.shortToEdit.title = this.titleControl.value;
+      this.update.emit(this.shortToEdit);
       this.inSubmission = false; 
       this.setAlertMessageWith("Short updated succesfully!", "bg-forest-green");
     } catch (error) {

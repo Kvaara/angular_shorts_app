@@ -52,4 +52,5 @@
     </div>
   </div>
 
-  <app-edit *ngIf="shortToEdit != null" [shortToEdit]="shortToEdit"></app-edit>
+  <app-edit (update)="update($event)" 
+   *ngIf="shortToEdit != null" [shortToEdit]="shortToEdit"></app-edit>
