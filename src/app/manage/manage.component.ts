@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Short } from '../models/short';
 import { ModalService } from '../services/modal.service';
 import { ShortService } from '../services/short.service';
@@ -13,20 +14,24 @@ export class ManageComponent implements OnInit {
   videoOrder = "1";
   shorts: Short[] = [];
   shortToEdit: Short | null = null;
+  sort$: BehaviorSubject<string>
 
   constructor(private router: Router, 
     private activatedRoute: ActivatedRoute,
     private shortService: ShortService,
     private modalService: ModalService
-  ) {}
+  ) {
+    this.sort$ = new BehaviorSubject(this.videoOrder);
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe( (queryParams: ParamMap) => 
       this.videoOrder = queryParams.get("sort") === "2" 
       ? "2"
       : "1"
+      this.sort$.next(this.videoOrder)
     );
-    this.shortService.getShortsMadeByUser().subscribe((docs) => {
+    this.shortService.getShortsMadeByUser(this.sort$).subscribe((docs) => {
       this.shorts = [];
 
       docs.forEach((doc) => {
