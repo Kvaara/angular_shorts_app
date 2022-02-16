@@ -8,6 +8,7 @@ import { Short } from '../models/short';
 import firebase from "firebase/compat/app";
 import { ShortService } from '../services/short.service';
 import { Router } from '@angular/router';
+import { FFmpegService } from '../services/ffmpeg.service';
 
 @Component({
   selector: 'app-upload',
@@ -40,8 +41,10 @@ export class UploadComponent implements OnDestroy {
     private auth: AngularFireAuth,
     private shortService: ShortService,
     private route: Router,
+    public ffmpegService: FFmpegService,
   ) {
     auth.user.subscribe((user) => this.user = user);
+    this.ffmpegService.loadFFmpegWA();
   }
 
   ngOnDestroy(): void {
