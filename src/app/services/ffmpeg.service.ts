@@ -23,5 +23,11 @@ export class FFmpegService {
     const data = await fetchFile(videoFile);
 
     this.ffmpeg!.FS("writeFile", videoFile.name, data);
+
+    await this.ffmpeg!.run(
+      "-i", videoFile.name, 
+      "-ss", "00:00:01", "-frames:v", "1", "-filter:v", "scale=510:-1",
+      "output_01.png",
+    );
   }
 }
