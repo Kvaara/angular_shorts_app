@@ -55,7 +55,7 @@ export class UploadComponent implements OnDestroy {
     this.isUserDragging = isUserDragging;
   }
 
-  storeFile($event: Event): void {
+  async storeFile($event: Event): Promise<void> {
     this.setIsUserDraggingTo(false);
 
     const fileDragged = ($event as DragEvent).dataTransfer?.files.item(0) ?? null;
@@ -66,6 +66,8 @@ export class UploadComponent implements OnDestroy {
     if (!this.videoFile || this.videoFile.type !== "video/mp4") {
       this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading a file of type "${this.videoFile?.type}"...`, "bg-red-400");
     } else {
+      await this.ffmpegService.getScreenshots(this.videoFile);
+
       this.setAlertMessageWith("", "");
 
       this.titleControl.setValue(
