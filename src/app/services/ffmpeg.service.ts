@@ -24,10 +24,19 @@ export class FFmpegService {
 
     this.ffmpeg!.FS("writeFile", videoFile.name, data);
 
+    const seconds = [1, 2, 3];
+    const commands: string[] = [];
+
+    seconds.forEach((second) => {
+      commands.push(
+        "-i", videoFile.name, 
+        "-ss", `00:00:0${second}`, "-frames:v", "1", "-filter:v", "scale=510:-1",
+        `output_0${second}.png`,
+      )
+    });
+
     await this.ffmpeg!.run(
-      "-i", videoFile.name, 
-      "-ss", "00:00:01", "-frames:v", "1", "-filter:v", "scale=510:-1",
-      "output_01.png",
+      ...commands
     );
   }
 }
