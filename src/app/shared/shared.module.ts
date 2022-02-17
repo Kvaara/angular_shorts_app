@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { AlertComponent } from './alert/alert.component';
 import { EventBlockerDirective } from './directives/event-blocker.directive';
+import { SafeURLPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EventBlockerDirective } from './directives/event-blocker.directive';
     InputComponent,
     AlertComponent,
     EventBlockerDirective,
+    SafeURLPipe,
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { EventBlockerDirective } from './directives/event-blocker.directive';
     InputComponent,
     AlertComponent,
     EventBlockerDirective,
+    SafeURLPipe,
     ]
 })
 export class SharedModule { }

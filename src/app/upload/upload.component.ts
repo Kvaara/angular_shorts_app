@@ -26,6 +26,7 @@ export class UploadComponent implements OnDestroy {
   showPercentage = false;
   user: firebase.User | null = null;
   uploadTask?: AngularFireUploadTask;
+  screenshots: string[] = [];
 
   titleControl = new FormControl("", [
     Validators.required,
@@ -66,7 +67,7 @@ export class UploadComponent implements OnDestroy {
     if (!this.videoFile || this.videoFile.type !== "video/mp4") {
       this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading a file of type "${this.videoFile?.type}"...`, "bg-red-400");
     } else {
-      await this.ffmpegService.getScreenshots(this.videoFile);
+      this.screenshots = await this.ffmpegService.getScreenshots(this.videoFile);
 
       this.setAlertMessageWith("", "");
 
