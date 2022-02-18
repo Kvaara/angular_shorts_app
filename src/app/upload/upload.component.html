@@ -6,7 +6,7 @@
   </app-alert>
 
     <div class="rounded relative flex flex-col">
-      <div class="font-bold mb-6">Upload Video</div>
+      <div class="font-bold mb-4 text-2xl">Upload Video</div>
 
       <div *ngIf="ffmpegService.isReady == true; else loading">
         <!-- Upload Dropbox -->
@@ -25,7 +25,7 @@
           <div *ngIf="!ffmpegService.inProgress; else loadingIndicator">
             <h5>Drop your video here...</h5>
             <h5>(*.mp4 files only)</h5>
-            <input type="file" class="mt-4" (change)="storeFile($event)" accept=".mp4">
+            <input type="file" class="mt-4 ml-12" (change)="storeFile($event)" accept=".mp4">
           </div>
           <ng-template #loadingIndicator>
             <div class="flex flex-col justify-center items-center">
@@ -41,20 +41,23 @@
   
           <!-- Form -->
           <form [formGroup]="uploadForm" (ngSubmit)="uploadVideoFile()">
-            <!-- Screenshots -->
-            <h2 class="mb-2 text-xl">Select a Thumbnail:</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <div *ngFor="let screenshot of screenshots"
-               class="border-8 cursor-pointer border-green-400">
-                <img [src]="screenshot | safeURL">
-              </div>
-            </div>
-  
+
             <!-- Title -->
-            <div class="mt-4">
-              <label class="block text-xl mb-2">Title:</label>
+            <div class="mb-4">
+              <label class="block text-xl mb-1" for="title">Title:</label>
               <app-input [control]="titleControl" 
                inputId="title" inputPlaceholder=""></app-input>
+            </div>
+
+            <!-- Screenshots -->
+            <h2 class="mb-1 text-xl">Select a Thumbnail:</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div *ngFor="let screenshot of screenshots, index as i"
+               (click)="selectedScreenshot = screenshots[i]"
+               class="border-8 cursor-pointer rounded-3xl"
+               [ngClass]="{'border-green-400': selectedScreenshot == screenshot}">
+                <img class="rounded-xl w-full" [src]="screenshot | safeURL">
+              </div>
             </div>
   
             <div class="mt-4 text-right">

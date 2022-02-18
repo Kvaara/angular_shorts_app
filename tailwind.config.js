@@ -8,6 +8,8 @@ module.exports = {
         "bg-red-400",
         "cornflower-blue",
         "forest-green",
+        "rounded-xl",
+        "rounded-3xl",
       ],
     },
   },
