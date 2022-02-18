@@ -57,28 +57,30 @@ export class UploadComponent implements OnDestroy {
   }
 
   async storeFile($event: Event): Promise<void> {
-    this.setIsUserDraggingTo(false);
+    if (!this.ffmpegService.inProgress) {
+      this.setIsUserDraggingTo(false);
 
-    const fileDragged = ($event as DragEvent).dataTransfer?.files.item(0) ?? null;
-    const fileNotDragged = ($event.target as HTMLInputElement).files?.item(0) ?? null;
-
-    fileDragged ? this.videoFile = fileDragged : this.videoFile = fileNotDragged;
-
-    if (!this.videoFile || this.videoFile.type !== "video/mp4") {
-      this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading a file of type "${this.videoFile?.type}"...`, "bg-red-400");
-    } else {
-      this.screenshots = await this.ffmpegService.getScreenshots(this.videoFile);
-
-      this.setAlertMessageWith("", "");
-
-      this.titleControl.setValue(
-        // Any character after the latest dot (.) character get's removed.
-        this.videoFile.name.replace(/\.[^/.]+$/, "")
-      );
+      const fileDragged = ($event as DragEvent).dataTransfer?.files.item(0) ?? null;
+      const fileNotDragged = ($event.target as HTMLInputElement).files?.item(0) ?? null;
   
-      this.showUploadDropbox = false;
-    }
+      fileDragged ? this.videoFile = fileDragged : this.videoFile = fileNotDragged;
+  
+      if (!this.videoFile || this.videoFile.type !== "video/mp4") {
+        this.setAlertMessageWith(`Only MP4 files are allowed. You tried uploading a file of type "${this.videoFile?.type}"...`, "bg-red-400");
+      } else {
+        this.screenshots = await this.ffmpegService.getScreenshots(this.videoFile);
+  
+        this.setAlertMessageWith("", "");
+  
+        this.titleControl.setValue(
+          // Any character after the latest dot (.) character get's removed.
+          this.videoFile.name.replace(/\.[^/.]+$/, "")
+        );
+    
+        this.showUploadDropbox = false;
+      }
 
+    }
   }
 
   uploadVideoFile(): void {
