@@ -129,7 +129,7 @@ export class UploadComponent implements OnDestroy {
         next: async (urls) => {
           const [shortURL, screenshotURL] = urls;
           
-          const short: Short = this.returnShortDataObject(videoUniqueID, shortURL, screenshotURL);
+          const short = this.returnShortDataObject(videoUniqueID, shortURL, screenshotURL, `${videoUniqueID}.png`);
 
           const shortDocumentRef = await this.shortService.createShort(short);
 
@@ -158,7 +158,12 @@ export class UploadComponent implements OnDestroy {
     this.alertBackgroundColor = alertBackgroundColor;
   }
 
-  returnShortDataObject(videoUniqueID: string, shortURL: string, screenshotURL: string): Short {
+  returnShortDataObject(
+    videoUniqueID: string, 
+    shortURL: string, 
+    screenshotURL: string, 
+    screenshotFileName: string
+  ): Short {
     return {
       uid: this.user!.uid,
       byUsername: this.user!.displayName,
@@ -166,7 +171,8 @@ export class UploadComponent implements OnDestroy {
       fileName: `${videoUniqueID}.mp4`,
       shortURL,
       screenshotURL,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      screenshotFileName,
     }
   }
 }

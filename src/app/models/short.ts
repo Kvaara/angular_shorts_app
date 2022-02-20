@@ -9,6 +9,7 @@ interface IShort {
     shortURL: string;
     screenshotURL: string;
     timestamp: firebase.firestore.FieldValue;
+    screenshotFileName: string;
 }
 
 export class Short implements IShort {
@@ -20,6 +21,7 @@ export class Short implements IShort {
     shortURL: string;
     screenshotURL: string;
     timestamp: firebase.firestore.FieldValue;
+    screenshotFileName: string;
 
     constructor(
         docID: string,
@@ -30,6 +32,7 @@ export class Short implements IShort {
         shortURL: string,
         screenshotURL: string,
         timestamp: firebase.firestore.FieldValue,
+        screenshotFileName: string,
     ) {
         this.docID = docID;
         this.uid = uid;
@@ -39,6 +42,7 @@ export class Short implements IShort {
         this.shortURL = shortURL;
         this.screenshotURL = screenshotURL;
         this.timestamp = timestamp;
+        this.screenshotFileName  = screenshotFileName;
     }
 
 }

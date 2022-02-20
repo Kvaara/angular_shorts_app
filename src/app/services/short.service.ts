@@ -54,6 +54,9 @@ export class ShortService {
     const shortRef = this.storage.ref(`videos/${short.fileName}`);
     shortRef.delete();
 
+    const screenshotRef = this.storage.ref(`screenshots/${short.screenshotFileName}`)
+    screenshotRef.delete();
+
     await this.shortsCollection.doc(short.docID).delete();
   }
 }
