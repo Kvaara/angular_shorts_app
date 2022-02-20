@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators  } from '@angular/forms';
-import { last, switchMap } from 'rxjs';
+import { combineLatest, last, switchMap } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 import { Short } from '../models/short';
 import firebase from "firebase/compat/app";
@@ -103,8 +103,16 @@ export class UploadComponent implements OnDestroy {
 
     this.screenshotTask = this.storage.upload(screenshotPath, screenshotBlob);
 
-    this.uploadTask.percentageChanges().subscribe((progress) => {
-      this.uploadPercentage = progress as number / 100;
+    combineLatest([
+      this.uploadTask.percentageChanges(),
+      this.screenshotTask.percentageChanges()
+    ]).subscribe((progresses) => {
+      const [videoProgress, screenshotProgress] = progresses;
+
+      if (videoProgress && screenshotProgress) {
+        const total = videoProgress + screenshotProgress;
+        this.uploadPercentage = total as number / 200;
+      }
     });
 
     this.uploadTask.snapshotChanges().pipe(
