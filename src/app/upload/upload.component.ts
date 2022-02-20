@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators  } from '@angular/forms';
-import { combineLatest, last, switchMap } from 'rxjs';
+import { combineLatest, forkJoin, last, switchMap } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 import { Short } from '../models/short';
 import firebase from "firebase/compat/app";
@@ -102,6 +102,7 @@ export class UploadComponent implements OnDestroy {
     const shortRef = this.storage.ref(videoPath);
 
     this.screenshotTask = this.storage.upload(screenshotPath, screenshotBlob);
+    const screenshotRef = this.storage.ref(screenshotPath);
 
     combineLatest([
       this.uploadTask.percentageChanges(),
@@ -115,13 +116,20 @@ export class UploadComponent implements OnDestroy {
       }
     });
 
-    this.uploadTask.snapshotChanges().pipe(
-      last(),
-      switchMap(() => shortRef.getDownloadURL())
+    forkJoin([
+      this.uploadTask.snapshotChanges(),
+      this.screenshotTask.snapshotChanges(),
+    ]).pipe(
+      switchMap(() => forkJoin([
+       shortRef.getDownloadURL(),
+       screenshotRef.getDownloadURL(),
+      ]))
     ).subscribe(
       {
-        next: async (url) => {
-          const short: Short = this.returnShortDataObject(videoUniqueID, url);
+        next: async (urls) => {
+          const [shortURL, screenshotURL] = urls;
+          
+          const short: Short = this.returnShortDataObject(videoUniqueID, shortURL, screenshotURL);
 
           const shortDocumentRef = await this.shortService.createShort(short);
 
@@ -140,7 +148,7 @@ export class UploadComponent implements OnDestroy {
           this.inSubmission = false;
           this.setAlertMessageWith("There was an unexpected error. Please try again...", "bg-red-400");
           console.error("There was an unexpected error:", error);
-        },
+        }
       }
     );
   }
@@ -150,13 +158,14 @@ export class UploadComponent implements OnDestroy {
     this.alertBackgroundColor = alertBackgroundColor;
   }
 
-  returnShortDataObject(videoUniqueID: string, url: string): Short {
+  returnShortDataObject(videoUniqueID: string, shortURL: string, screenshotURL: string): Short {
     return {
       uid: this.user!.uid,
       byUsername: this.user!.displayName,
       title: this.titleControl.value,
       fileName: `${videoUniqueID}.mp4`,
-      url,
+      shortURL,
+      screenshotURL,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }
   }

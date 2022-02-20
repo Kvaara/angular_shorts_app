@@ -6,7 +6,8 @@ interface IShort {
     byUsername?: string | null;
     title: string;
     fileName: string;
-    url: string;
+    shortURL: string;
+    screenshotURL: string;
     timestamp: firebase.firestore.FieldValue;
 }
 
@@ -16,7 +17,8 @@ export class Short implements IShort {
     byUsername?: string | null;
     title: string;
     fileName: string;
-    url: string;
+    shortURL: string;
+    screenshotURL: string;
     timestamp: firebase.firestore.FieldValue;
 
     constructor(
@@ -25,7 +27,8 @@ export class Short implements IShort {
         displayName: string | null,
         title: string,
         fileName: string,
-        url: string,
+        shortURL: string,
+        screenshotURL: string,
         timestamp: firebase.firestore.FieldValue,
     ) {
         this.docID = docID;
@@ -33,7 +36,8 @@ export class Short implements IShort {
         this.byUsername = displayName;
         this.title = title;
         this.fileName = fileName;
-        this.url = url;
+        this.shortURL = shortURL;
+        this.screenshotURL = screenshotURL;
         this.timestamp = timestamp;
     }
 
