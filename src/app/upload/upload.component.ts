@@ -26,6 +26,7 @@ export class UploadComponent implements OnDestroy {
   showPercentage = false;
   user: firebase.User | null = null;
   uploadTask?: AngularFireUploadTask;
+  screenshotTask?: AngularFireUploadTask;
   screenshots: string[] = [];
   selectedScreenshot = "";
 
@@ -85,7 +86,7 @@ export class UploadComponent implements OnDestroy {
     }
   }
 
-  uploadVideoFile(): void {
+  async uploadVideoFile(): Promise<void> {
     this.uploadForm.disable();
     this.inSubmission = true;
     this.showPercentage = true;
@@ -94,8 +95,13 @@ export class UploadComponent implements OnDestroy {
     const videoUniqueID = uuidv4();
     const videoPath = `videos/${videoUniqueID}.mp4`;
     
+    const screenshotBlob = await this.ffmpegService.blobFromURL(this.selectedScreenshot);
+    const screenshotPath = `screenshots/${videoUniqueID}.png`;
+
     this.uploadTask = this.storage.upload(videoPath, this.videoFile);
     const shortRef = this.storage.ref(videoPath);
+
+    this.screenshotTask = this.storage.upload(screenshotPath, screenshotBlob);
 
     this.uploadTask.percentageChanges().subscribe((progress) => {
       this.uploadPercentage = progress as number / 100;
