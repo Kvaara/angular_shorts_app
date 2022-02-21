@@ -78,10 +78,10 @@ export class ManageComponent implements OnInit {
 
   hasShortImgLoaded(short: Short) {
     return this.loadedShorts.includes(short);
-  }
+  };
 
   onImgLoaded(short: Short) {
     this.loadedShorts.push(short);
-  }
+  };
 
 }

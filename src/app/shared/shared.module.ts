@@ -10,6 +10,7 @@ import { AlertComponent } from './alert/alert.component';
 import { EventBlockerDirective } from './directives/event-blocker.directive';
 import { SafeURLPipe } from './pipes/safe-url.pipe';
 import { FbTimestampPipe } from './pipes/fb-timestamp.pipe';
+import { ToClipboardDirective } from './directives/to-clipboard.directive';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FbTimestampPipe } from './pipes/fb-timestamp.pipe';
     EventBlockerDirective,
     SafeURLPipe,
     FbTimestampPipe,
+    ToClipboardDirective,
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { FbTimestampPipe } from './pipes/fb-timestamp.pipe';
     EventBlockerDirective,
     SafeURLPipe,
     FbTimestampPipe,
+    ToClipboardDirective,
     ]
 })
 export class SharedModule { }
