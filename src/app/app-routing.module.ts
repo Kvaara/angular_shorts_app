@@ -7,6 +7,7 @@ import { ManageComponent } from './manage/manage.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UploadComponent } from './upload/upload.component';
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from "@angular/fire/compat/auth-guard";
+import { ShortService } from './services/short.service';
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo("/");
 
@@ -43,8 +44,8 @@ const uploadPage: Route = {
 const shortPage: Route = {
   path: "short/:id",
   component: ShortComponent,
-  data: {
-    isAuthOnly: true,
+  resolve: {
+    short: ShortService
   }
 }
 

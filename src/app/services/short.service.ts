@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
 import { Short } from '../models/short';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShortService {
+export class ShortService implements Resolve<Promise<Short | null>> {
   private shortsCollection: AngularFirestoreCollection<Short>;
   private isShortsReqPending = false;
   public currentShortsInPage: Short[] = [];
@@ -17,9 +18,27 @@ export class ShortService {
     private db: AngularFirestore,
     private auth: AngularFireAuth,
     private storage: AngularFireStorage,
+    private router: Router,
   ) {
     this.shortsCollection = db.collection("shorts");
   };
+
+  resolve(route: ActivatedRouteSnapshot) {
+    return this.shortsCollection.doc(route.params["id"])
+    .get()
+    .pipe(
+      map(async (snapshot) => {
+        const data = snapshot.data();
+
+        if (!data) {
+          await this.router.navigate(["/", "not-found"]);
+          return null;
+        } else {
+          return data;
+        }
+      })
+    )
+  }
 
   createShort(shortData: Short): Promise<DocumentReference<Short>>  {
     return this.shortsCollection.add(shortData);
