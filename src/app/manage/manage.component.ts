@@ -13,6 +13,7 @@ import { ShortService } from '../services/short.service';
 export class ManageComponent implements OnInit {
   videoOrder = "1";
   shorts: Short[] = [];
+  loadedShorts: Short[] = [];
   shortToEdit: Short | null = null;
   sort$: BehaviorSubject<string>
 
@@ -73,6 +74,14 @@ export class ManageComponent implements OnInit {
         this.shorts.splice(index, 1);
       }
      });
+  }
+
+  hasShortImgLoaded(short: Short) {
+    return this.loadedShorts.includes(short);
+  }
+
+  onImgLoaded(short: Short) {
+    this.loadedShorts.push(short);
   }
 
 }
