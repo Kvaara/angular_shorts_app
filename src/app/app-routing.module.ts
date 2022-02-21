@@ -44,6 +44,7 @@ const uploadPage: Route = {
 const shortPage: Route = {
   path: "short/:id",
   component: ShortComponent,
+  // The below key can be of any name but remember data is accessible from that name (E.G ActivatedRoute.data.short)
   resolve: {
     short: ShortService
   }

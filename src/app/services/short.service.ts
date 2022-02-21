@@ -23,6 +23,7 @@ export class ShortService implements Resolve<Promise<Short | null>> {
     this.shortsCollection = db.collection("shorts");
   };
 
+  // The data returned from resolve function gets stored in the activatedRoute's data property (ActivatedRoute.data)
   resolve(route: ActivatedRouteSnapshot) {
     return this.shortsCollection.doc(route.params["id"])
     .get()
