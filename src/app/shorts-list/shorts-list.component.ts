@@ -1,10 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShortService } from '../services/short.service';
 
 @Component({
   selector: 'app-shorts-list',
   templateUrl: './shorts-list.component.html',
-  styleUrls: ['./shorts-list.component.scss']
+  styleUrls: ['./shorts-list.component.scss'],
+  providers: [DatePipe],
 })
 export class ShortsListComponent implements OnInit, OnDestroy {
 

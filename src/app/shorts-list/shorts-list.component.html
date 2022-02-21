@@ -31,7 +31,9 @@
         <!-- Name & Date -->
         <p class="mb-0">
           {{ short.byUsername }} &#183; 
-          <span class="text-gray-400">{{ short.timestamp }}</span>
+          <span class="text-gray-400">{{ short.timestamp | fbTimestamp }}</span>
+          <!-- could be done without the custom pipe as seen below: -->
+          <!-- <span class="text-gray-400">{{ $any(short.timestamp).toDate() | date }}</span> -->
         </p>
 
       </div>

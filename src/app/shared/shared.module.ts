@@ -9,6 +9,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { AlertComponent } from './alert/alert.component';
 import { EventBlockerDirective } from './directives/event-blocker.directive';
 import { SafeURLPipe } from './pipes/safe-url.pipe';
+import { FbTimestampPipe } from './pipes/fb-timestamp.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SafeURLPipe } from './pipes/safe-url.pipe';
     AlertComponent,
     EventBlockerDirective,
     SafeURLPipe,
+    FbTimestampPipe,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { SafeURLPipe } from './pipes/safe-url.pipe';
     AlertComponent,
     EventBlockerDirective,
     SafeURLPipe,
+    FbTimestampPipe,
     ]
 })
 export class SharedModule { }
