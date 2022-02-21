@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ShortService } from '../services/short.service';
 
 @Component({
@@ -9,17 +9,24 @@ import { ShortService } from '../services/short.service';
   providers: [DatePipe],
 })
 export class ShortsListComponent implements OnInit, OnDestroy {
+  @Input() isInfiniteScrolling = true;
 
   constructor(public shortService: ShortService) {
     this.shortService.getShorts();
   }
 
   ngOnInit(): void {
-    window.addEventListener("scroll", this.handleScroll);
+    if (this.isInfiniteScrolling) {
+      window.addEventListener("scroll", this.handleScroll);
+    }
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener("scroll", this.handleScroll);
+    if (this.isInfiniteScrolling) {
+      window.removeEventListener("scroll", this.handleScroll);
+    }
+
+    this.shortService.currentShortsInPage = [];
   }
 
   private handleScroll = ()  => {
