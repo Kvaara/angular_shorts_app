@@ -10,8 +10,8 @@ import { Short } from '../models/short';
 })
 export class ShortService {
   private shortsCollection: AngularFirestoreCollection<Short>;
-  private currentShortsInPage: Short[] = [];
   private isShortsReqPending = false;
+  public currentShortsInPage: Short[] = [];
 
   constructor(
     private db: AngularFirestore,
