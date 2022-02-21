@@ -18,6 +18,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditComponent } from './edit/edit.component';
+import { ShortsListComponent } from './shorts-list/shorts-list.component';
 // import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
@@ -30,7 +31,8 @@ import { EditComponent } from './edit/edit.component';
     UploadComponent,
     ShortComponent,
     NotFoundComponent,
-    EditComponent
+    EditComponent,
+    ShortsListComponent
   ],
   imports: [
     BrowserModule,
