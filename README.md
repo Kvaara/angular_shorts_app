@@ -1,6 +1,10 @@
-# Shorts
+# Shorts (a Twitch Clips inspired application)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+This is one of my biggest projects that I have done. I have developed this using Angular and Google's BaaS service called Firebase but there's so much more to this.
+
+This current version (v1.0.0) is the MVP of this project. There are some stuff that could be improved upon related to the user interface and user experience. Deleting and editing shorts (the uploaded videos) is too abrupt and doesn't inform the user of what happened, give the user a chance to undo their action or even ask the user for confirmation before executing the action. The "LATEST" section on the bottom of the page doesn't correctly scale/ the images
+
+This project is being hosted live by Vercel and [you can play around with it here (v1.0.0)](https://angular-shorts-app.vercel.app/).
 
 ## Development server
 
