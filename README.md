@@ -23,7 +23,7 @@ I have used vanilla CSS but also the TailWindCSS package in styling the applicat
 
 ## LIST OF IMPROVEMENTS
 
-So what could be improved upon (or even fixed)? **Note: The list may be long but remember that the current version of this application is the MVP and I have purposeful left these improvements from it** 
+So what could be improved upon (or even fixed)? **Note: The list may be long but remember that the current version of this application is the MVP and I have purposefully left these improvements from it** 
 
 * Deleting and editing shorts (the uploaded videos) is too abrupt and doesn't inform the user of what happened, give the user a chance to undo their action or even ask the user for confirmation before executing the action. 
 * The "LATEST" section on the bottom of the page doesn't correctly scale the images to a fixed height and weight. The images aren't sized the same, which is not optimal.
